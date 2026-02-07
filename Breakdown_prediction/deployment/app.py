@@ -1,4 +1,3 @@
-#%%writefile /content/Engine_PM/Engine_PM/Breakdown_prediction/deployment/app.py
 import streamlit as st
 import joblib
 import pandas as pd
@@ -19,11 +18,6 @@ data.columns = (data.columns
                    .str.replace(" ","_")
                    .str.replace(r"[^\w]","_",regex=True)
   )
-
-if data.empty:
-  new_id=1
-else:
-  new_id=data["CustomerID"].max()+1
 
 # -----------------------------
 # Load Model

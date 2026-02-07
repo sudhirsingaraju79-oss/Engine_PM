@@ -23,13 +23,15 @@ api = HfApi(token=os.getenv("HF_TOKEN"))
 # read data for Huggingface dataset space
 DATASET_PATH = "hf://datasets/sudhirpgcmma02/Engine_PM/data/engine_data.csv"
 df = pd.read_csv(DATASET_PATH)
-
+data_df=df.copy()
 #Features naming standardisation for easy handling
 df.columns = (df.columns
                    .str.strip()
                    .str.replace(" ","_")
                    .str.replace(r"[^\w]","_",regex=True)
   )
+
+
 
 # Targe varaible intialisation
 target_col = 'Engine_Condition'
