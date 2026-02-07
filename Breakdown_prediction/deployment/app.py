@@ -27,7 +27,7 @@ else:
 # -----------------------------
 # Load Model
 # -----------------------------
-model = joblib.load("best_engine_PM_prediction_v1.joblib")
+model = joblib.load("../best_engine_PM_prediction_v1.joblib")
 
 st.set_page_config(page_title="Engine Condition Predictor", layout="centered")
 
