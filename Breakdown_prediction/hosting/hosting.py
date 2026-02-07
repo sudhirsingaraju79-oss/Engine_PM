@@ -13,7 +13,7 @@ files = ["Breakdown_prediction/deployment/app.py",
          "Breakdown_prediction/deployment/requirements.txt",
          "Breakdown_prediction/model_building/train.py",
          "Breakdown_prediction/data/engine_data.csv",
-         #"Breakdown_prediction/python_env.yaml",
+         "Breakdown_prediction/python_env.yaml",
          "Breakdown_prediction/best_engine_PM_prediction_v1.joblib"]
 
 for f in files:
