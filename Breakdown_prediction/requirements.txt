@@ -9,3 +9,4 @@ streamlit==1.43.2
 joblib==1.5.1
 cloudpickle==3.1.2
 psutil==5.9.5
+seaborn==0.12.0
