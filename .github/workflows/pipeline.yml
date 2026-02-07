@@ -1,5 +1,4 @@
-```
-name: Tourism Project Pipeline
+name: Engine Breakdown Predictive maintenance Pipeline
 
 on:
   push:
@@ -39,10 +38,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Dependencies
         run: pip install -r Breakdown_prediction/deployment/requirements.txt
-      - name: Start MLflow Server
-        run: |
-          nohup mlflow ui --host 0.0.0.0 --port 5000 &  # Run MLflow UI in the background
-          sleep 5  # Wait for a moment to let the server starts
       - name: Model Building
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
