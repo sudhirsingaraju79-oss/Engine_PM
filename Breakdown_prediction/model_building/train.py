@@ -14,7 +14,7 @@ import optuna
 from sklearn.linear_model import LogisticRegression
 from sklearn.compose import make_column_transformer
 from imblearn.pipeline import Pipeline
-from imblearn.over_sampling import SMOTE
+
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import VotingClassifier
 from sklearn.ensemble import StackingClassifier
@@ -539,8 +539,8 @@ plt.show()
 
 
 # Save the model locally
-model_path = "best_engine_PM_prediction_v1.joblib"
-joblib.dump(best_model, model_path)
+model_path = "Breakdown_prediction/best_engine_PM_prediction_v1.joblib"
+joblib.dump(best_model, model_path,compress=("lzma",9))# job lfile > 110 NB |reduce to 20~40 MB
 
 # Log the model artifact
 #mlflow.log_artifact(model_path, artifact_path="model")
@@ -561,8 +561,8 @@ except RepositoryNotFoundError:
 
 # create_repo("churn-model", repo_type="model", private=False)
 api.upload_file(
-     path_or_fileobj="best_engine_PM_prediction_v1.joblib",
-     path_in_repo="best_engine_PM_prediction_v1.joblib",
+     path_or_fileobj="Breakdown_prediction/best_engine_PM_prediction_v1.joblib",
+     path_in_repo="Breakdown_prediction/best_engine_PM_prediction_v1.joblib",
      repo_id=repo_id,
      repo_type=repo_type,
 )

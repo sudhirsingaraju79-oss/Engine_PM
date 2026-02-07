@@ -1,3 +1,4 @@
+#%%writefile /content/Engine_PM/Engine_PM/Breakdown_prediction/deployment/app.py
 import streamlit as st
 import joblib
 import pandas as pd
@@ -8,8 +9,8 @@ def load_data():
   except:
     return pd.DataFrame(columns=[
         "Engine rpm","Lub oil pressure","Fuel pressure","Coolant pressure","lub oil temp","Coolant temp","Engine condition"])
-    
- 
+
+
 data=load_data()
 
 #renaming columns for easy processing
@@ -137,7 +138,7 @@ if st.button("Predict"):
               updated_df = pd.concat([existing_df, pd.DataFrame([input_df])], ignore_index=True)
           else:
               # Create new CSV
-              updated_df = pd.DataFrame([input_data])
+              updated_df = pd.DataFrame([input_df])
 
           updated_df.to_csv(file_path, index=False)
 
