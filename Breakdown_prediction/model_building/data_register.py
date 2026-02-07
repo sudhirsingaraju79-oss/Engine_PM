@@ -19,7 +19,7 @@ except RepositoryNotFoundError:
     create_repo(repo_id=repo_id, repo_type=repo_type, private=False)
     print(f"Space '{repo_id}' created.")
 
-local_file ="/content/Breakdown_prediction/data/engine_data.csv"
+local_file ="Breakdown_prediction/data/engine_data.csv"
 
 folder_path="data/engine_data.csv"
 # Register the data directly  to Huggingface
