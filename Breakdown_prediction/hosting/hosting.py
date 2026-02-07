@@ -1,8 +1,6 @@
 from huggingface_hub import HfApi
 import os
 
-login()
-
 api = HfApi(token=os.getenv("HF_TOKEN"))
 
 files = ["Breakdown_prediction/deployment/app.py",
