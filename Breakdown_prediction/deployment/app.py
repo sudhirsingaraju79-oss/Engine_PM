@@ -27,7 +27,9 @@ else:
 # -----------------------------
 # Load Model
 # -----------------------------
-model = joblib.load("../best_engine_PM_prediction_v1.joblib")
+base_dir= os.path.dirname(__file__)
+model_path= os.path.join(base_dir,"best_engine_PM_prediction_v1.joblib")
+model = joblib.load(model_path)
 
 st.set_page_config(page_title="Engine Condition Predictor", layout="centered")
 
