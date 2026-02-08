@@ -89,7 +89,7 @@ with st.form("engine_input_form"):
   # -----------------------------
   # Predict Button
   # -----------------------------
-if st.button("Predict"):
+if submit:
 
     input_df = pd.DataFrame({
             "Engine_rpm": [engine_rpm],

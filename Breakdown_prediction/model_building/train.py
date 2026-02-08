@@ -56,11 +56,13 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
         else:
             # These are the expected column names after initial preprocessing
             # They should be consistent with the features defined in the overall dataset.
-            expected_column_names = [
+            """expected_column_names = [
                 'Engine_rpm', 'Lub_oil_pressure', 'Fuel_pressure',
                 'Coolant_pressure', 'lub_oil_temp', 'Coolant_temp'
-            ]
-            df = pd.DataFrame(X, columns=expected_column_names)
+            ]"""
+            col=self.columns_
+            #df = pd.DataFrame(X, columns=expected_column_names)
+            df = pd.DataFrame(X, columns=col)
 
         df.columns = (df.columns
                            .str.strip()
