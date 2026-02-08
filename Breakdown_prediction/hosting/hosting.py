@@ -1,6 +1,6 @@
 from huggingface_hub import HfApi
 import os
-os.chdir("/content")
+
 
 api = HfApi(token=os.getenv("HF_TOKEN"))
 
