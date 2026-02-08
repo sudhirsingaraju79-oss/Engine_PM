@@ -1,5 +1,6 @@
 from huggingface_hub import HfApi
 import os
+os.chdir("/content")
 
 api = HfApi(token=os.getenv("HF_TOKEN"))
 
@@ -12,6 +13,8 @@ files = ["Breakdown_prediction/deployment/app.py",
          "Breakdown_prediction/model_building/train.py",
          "Breakdown_prediction/data/engine_data.csv",
          "Breakdown_prediction/python_env.yaml",
+         "Breakdown_prediction/model_building/featureengineer.py",
+         "Breakdown_prediction/model_building/outliercapper.py",
          "Breakdown_prediction/best_engine_PM_prediction_v1.joblib"]
 
 for f in files:

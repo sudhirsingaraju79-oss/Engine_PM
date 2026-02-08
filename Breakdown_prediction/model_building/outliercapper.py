@@ -1,3 +1,4 @@
+from sklearn.base import BaseEstimator, TransformerMixin
 class OutlierCapper(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):

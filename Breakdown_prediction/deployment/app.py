@@ -2,6 +2,7 @@ import streamlit as st
 import joblib
 import pandas as pd
 import os
+from sklearn.base import BaseEstimator, TransformerMixin
 from featureengineer import FeatureEngineer
 from outliercapper import OutlierCapper
 def load_data():
