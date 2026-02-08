@@ -30,9 +30,7 @@ model_path= os.path.join(base_dir,"best_engine_PM_prediction_v1.joblib")
 model = joblib.load(model_path)
 
 st.set_page_config(page_title="Engine Condition Predictor", layout="centered")
-
 st.title("🔧 Engine Health Monitoring System")
-
 st.write("Enter the engine sensor values below to predict engine condition")
 
 # ---- User Inputs ----
@@ -87,9 +85,9 @@ with st.form("engine_input_form"):
     )
     submit = st.form_submit_button("🚀 Predict Engine Condition")
 
-  # -----------------------------
-  # Predict Button
-  # -----------------------------
+# -----------------------------
+# Predict Button
+# -----------------------------
 if submit:
 
     input_df = pd.DataFrame({
@@ -112,18 +110,17 @@ if submit:
     st.subheader("Prediction Result")
 
     if prob>=0.5:
-      st.success(f"Engine needs Preventive maintenance. Probability: {prob:.2f}")
-      
+      label="Maintenance Needed"
+      st.warning(f"Engine needs Preventive maintenance. Probability: {prob:.2f}")
     else:
-      st.error(f"Engine working normal. Probability: {prob:.2f}")
-      input_df['Engine_condition'] = 0 #'Normal '
-
+      label="Normal"
+      st.success(f"Engine working normal. Probability: {prob:.2f}")
+      
     # Save prediction to dataframe
-    #input_df["Engine condition"] = prediction
-    #input_df["Probability"] = round(prob, 4)
+    input_df['Engine_condition'] = label #'Normal / Preventive maintenance req '
 
-    st.write("### Record to be saved:")
-    st.dataframe([input_df])
+    st.write("### Record to be saved!!!!")
+    st.dataframe(input_df)
 
       # -----------------------------
       # SAVE RECORDS SECTION
@@ -134,7 +131,7 @@ if st.button("Save Record"):
   # If file exists → append
   if os.path.exists(file_path):
     existing_df = pd.read_csv(file_path)
-    updated_df = pd.concat([existing_df, [input_df]], ignore_index=True)
+    updated_df = pd.concat([existing_df, input_df], ignore_index=True)
   else:
     # Create new CSV
     updated_df = input_df
@@ -144,6 +141,5 @@ if st.button("Save Record"):
     st.success("Record saved successfully!")
     
 else:
-      
   st.error("Record not saved...Thank for analysis")
       
