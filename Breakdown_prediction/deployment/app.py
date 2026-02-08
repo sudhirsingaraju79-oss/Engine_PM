@@ -31,7 +31,9 @@ model = joblib.load(model_path)
 
 st.set_page_config(page_title="Engine Condition Predictor", layout="centered")
 
+st.image("Breakdown_prediction/Minimalist logo desi.png", width=200)
 st.title("🔧 Engine Health Monitoring System")
+
 st.write("Enter the engine sensor values below to predict engine condition")
 
 # ---- User Inputs ----
@@ -104,7 +106,6 @@ if submit:
     st.write("### Input Data")
     st.dataframe(input_df)
 
-
     # Predict
     prediction = model.predict(input_df)[0]
     prob = model.predict_proba(input_df)[0][1]
@@ -113,38 +114,37 @@ if submit:
 
     if prob>=0.5:
       st.success(f"Engine needs Preventive maintenance. Probability: {prob:.2f}")
-      input_df['Engine condition'] = 1 #'Needs Preventive Maintenance'
-    
+      
     else:
       st.error(f"Engine working normal. Probability: {prob:.2f}")
-      input_df['Engine condition'] = 0 #'Normal '
+      input_df['Engine_condition'] = 0 #'Normal '
 
     # Save prediction to dataframe
     #input_df["Engine condition"] = prediction
     #input_df["Probability"] = round(prob, 4)
 
     st.write("### Record to be saved:")
-    st.dataframe(pd.DataFrame([input_df]))
+    st.dataframe([input_df])
 
       # -----------------------------
       # SAVE RECORDS SECTION
       # -----------------------------
-    if st.button("Save Record"):
-       file_path = "records.csv"
+if st.button("Save Record"):
+  file_path = "records.csv"
 
-       # If file exists → append
-       if os.path.exists(file_path):
-         existing_df = pd.read_csv(file_path)
-         updated_df = pd.concat([existing_df, pd.DataFrame([input_df])], ignore_index=True)
-       else:
-         # Create new CSV
-         updated_df = pd.DataFrame([input_df])
+  # If file exists → append
+  if os.path.exists(file_path):
+    existing_df = pd.read_csv(file_path)
+    updated_df = pd.concat([existing_df, [input_df]], ignore_index=True)
+  else:
+    # Create new CSV
+    updated_df = input_df
 
-       updated_df.to_csv(file_path, index=False)
+    updated_df.to_csv(file_path, index=False)
 
-       st.success("Record saved successfully!")
+    st.success("Record saved successfully!")
     
-    else:
+else:
       
-      st.error("Record not saved...Thank for analysis")
+  st.error("Record not saved...Thank for analysis")
       
