@@ -111,32 +111,40 @@ if submit:
 
     st.subheader("Prediction Result")
 
-    if prediction == 1:
+    if prob>=0.5:
       st.success(f"Engine needs Preventive maintenance. Probability: {prob:.2f}")
+      input_df['Engine condition'] = 1 #'Needs Preventive Maintenance'
+    
     else:
       st.error(f"Engine working normal. Probability: {prob:.2f}")
+      input_df['Engine condition'] = 0 #'Normal '
 
-      # Save prediction to dataframe
-      input_df["Predicted_ProdTaken"] = prediction
-      input_df["Probability"] = round(prob, 4)
+    # Save prediction to dataframe
+    #input_df["Engine condition"] = prediction
+    #input_df["Probability"] = round(prob, 4)
 
-      st.write("### Record to be saved:")
-      st.dataframe(pd.DataFrame([input_df]))
+    st.write("### Record to be saved:")
+    st.dataframe(pd.DataFrame([input_df]))
 
       # -----------------------------
       # SAVE RECORDS SECTION
       # -----------------------------
-      if st.button("Save Record"):
-          file_path = "records.csv"
+    if st.button("Save Record"):
+       file_path = "records.csv"
 
-          # If file exists → append
-          if os.path.exists(file_path):
-              existing_df = pd.read_csv(file_path)
-              updated_df = pd.concat([existing_df, pd.DataFrame([input_df])], ignore_index=True)
-          else:
-              # Create new CSV
-              updated_df = pd.DataFrame([input_df])
+       # If file exists → append
+       if os.path.exists(file_path):
+         existing_df = pd.read_csv(file_path)
+         updated_df = pd.concat([existing_df, pd.DataFrame([input_df])], ignore_index=True)
+       else:
+         # Create new CSV
+         updated_df = pd.DataFrame([input_df])
 
-          updated_df.to_csv(file_path, index=False)
+       updated_df.to_csv(file_path, index=False)
 
-          st.success("Record saved successfully!")
+       st.success("Record saved successfully!")
+    
+    else:
+      
+      st.error("Record not saved...Thank for analysis")
+      
