@@ -118,26 +118,27 @@ if submit:
       
     # Save prediction to dataframe
     input_df['Engine_condition'] = label #'Normal / Preventive maintenance req '
-
+    st.session_state['input_df'] = input_df
     
       # -----------------------------
       # SAVE RECORDS SECTION
       # -----------------------------
     if st.button("Save Record"):
-      file_path = "records.csv"
+      if "input_df" in st.session_state:
+        file_path = "records.csv"
 
-      # If file exists → append
-      if os.path.exists(file_path):
-        existing_df = pd.read_csv(file_path)
-        updated_df = pd.concat([existing_df, input_df], ignore_index=True)
+        # If file exists → append
+        if os.path.exists(file_path):
+          existing_df = pd.read_csv(file_path)
+          updated_df = pd.concat([existing_df, input_df], ignore_index=True)
+        else:
+          # Create new CSV
+          updated_df = st.session_state['input_df']
+
+          updated_df.to_csv(file_path, index=False)
+
+          st.success("Record saved successfully!")
+          
       else:
-        # Create new CSV
-        updated_df = input_df
-
-        updated_df.to_csv(file_path, index=False)
-
-        st.success("Record saved successfully!")
+        st.error("Record not saved...Thank for analysis")
         
-    else:
-      st.error("Record not saved...Thank for analysis")
-      
