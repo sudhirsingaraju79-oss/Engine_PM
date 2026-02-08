@@ -481,9 +481,6 @@ for name,model in best_model.named_estimators_.items():
   print(f"\n * Base model - {name}")
   pprint(model.get_params())
 
-print("\n final estimator (meta model) ")
-pprint(best_model.final_estimator_.get_params())
-
 # printing the model performance (FP / FN evaluation)
 print("best slected model | classification report \n",classification_report(ytest, y_pred))
 print("best slected model | confusion matrix \n",confusion_matrix(ytest, y_pred))
