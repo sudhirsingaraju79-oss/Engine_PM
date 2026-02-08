@@ -14,7 +14,6 @@ import optuna
 from sklearn.linear_model import LogisticRegression
 from sklearn.compose import make_column_transformer
 from imblearn.pipeline import Pipeline
-
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import VotingClassifier
 from sklearn.ensemble import StackingClassifier
@@ -28,6 +27,9 @@ from huggingface_hub.utils import RepositoryNotFoundError, HfHubHTTPError
 from pprint import pprint
 from xgboost import XGBClassifier # Added for XGBoost
 from sklearn.ensemble import RandomForestClassifier # Added for RandomForest
+# custom class inheritance
+from featureengineer import FeatureEngineer
+from outliercapper import OutlierCapper
 
 api = HfApi()
 
