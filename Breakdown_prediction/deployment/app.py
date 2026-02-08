@@ -31,7 +31,6 @@ model = joblib.load(model_path)
 
 st.set_page_config(page_title="Engine Condition Predictor", layout="centered")
 
-st.image("Breakdown_prediction/Minimalist logo desi.png", width=200)
 st.title("🔧 Engine Health Monitoring System")
 
 st.write("Enter the engine sensor values below to predict engine condition")
