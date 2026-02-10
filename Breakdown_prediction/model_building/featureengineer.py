@@ -13,29 +13,32 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
         else:
             # These are the expected column names after initial preprocessing
             # They should be consistent with the features defined in the overall dataset.
-            expected_column_names = [
+            """expected_column_names = [
                 'Engine_rpm', 'Lub_oil_pressure', 'Fuel_pressure',
                 'Coolant_pressure', 'lub_oil_temp', 'Coolant_temp'
             ]
-            df = pd.DataFrame(X, columns=expected_column_names)
+            df = pd.DataFrame(X, columns=expected_column_names)"""
 
         df.columns = (df.columns
                            .str.strip()
                            .str.replace(" ","_")
                            .str.replace(r"[^\w]","_",regex=True)
+                           .str.lower()
         )
 
-        engine_rpm_col = 'Engine_rpm'
+        """engine_rpm_col = 'Engine_rpm'
         lub_oil_pressure_col = 'Lub_oil_pressure'
         fuel_pressure_col = 'Fuel_pressure'
         coolant_pressure_col = 'Coolant_pressure'
         lub_oil_temp_col = 'lub_oil_temp'
-        coolant_temp_col = 'Coolant_temp'
+        coolant_temp_col = 'Coolant_temp'"""
 
-        core_sensor_cols = [
+        core_sensor_cols = df.columns.tolist()
+        """
+         [
             engine_rpm_col, lub_oil_pressure_col, fuel_pressure_col,
             coolant_pressure_col, lub_oil_temp_col, coolant_temp_col
-        ]
+        ]"""
 
         # ===== diff features
         for col_name in df.select_dtypes(include=np.number).columns:
@@ -57,8 +60,11 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
 
         # ===== aggregates
         # Corrected: Use actual string column names instead of integer indices
-        df["temp_gap"] = df[lub_oil_temp_col] - df[coolant_temp_col]   # oil vs coolant
-        df["pressure_sum"] = df[[lub_oil_pressure_col, fuel_pressure_col, coolant_pressure_col]].sum(axis=1)
+        #df["temp_gap"] = df[lub_oil_temp_col] - df[coolant_temp_col]   # oil vs coolant
+        #df["pressure_sum"] = df[[lub_oil_pressure_col, fuel_pressure_col, coolant_pressure_col]].sum(axis=1)
+
+        df["temp_gap"] = df['lub_oil_temp'] - df['coolant_temp']   # oil vs coolant
+        df["pressure_sum"] = df[['lub_oil_pressure','fuel_pressure', 'coolant_pressure']].sum(axis=1)
 
         df = df.fillna(0)
 

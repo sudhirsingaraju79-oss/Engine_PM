@@ -20,6 +20,8 @@ data.columns = (data.columns
                    .str.strip()
                    .str.replace(" ","_")
                    .str.replace(r"[^\w]","_",regex=True)
+                   .str.lower()
+                   
   )
 
 # -----------------------------
@@ -89,14 +91,14 @@ with st.form("engine_input_form"):
 # Predict Button
 # -----------------------------
 if submit:
-
+  
     input_df = pd.DataFrame({
-            "Engine_rpm": [engine_rpm],
-            "Lub_oil_pressure": [lub_oil_pressure],
-            "Fuel_pressure": [fuel_pressure],
-            "Coolant_pressure": [coolant_pressure],
+            "engine_rpm": [engine_rpm],
+            "lub_oil_pressure": [lub_oil_pressure],
+            "fuel_pressure": [fuel_pressure],
+            "coolant_pressure": [coolant_pressure],
             "lub_oil_temp": [lub_oil_temp],
-            "Coolant_temp": [coolant_temp]
+            "coolant_temp": [coolant_temp]
         })
 
     st.success("✅ Input captured successfully")
@@ -115,7 +117,7 @@ if submit:
     else:
       label="Normal"
       st.success(f"Engine working normal. Probability: {prob:.2f}")
-      
+
     # Save prediction to dataframe
     input_df['Engine_condition'] = label #'Normal / Preventive maintenance req '
     st.session_state['input_df'] = input_df
@@ -138,7 +140,7 @@ if submit:
           updated_df.to_csv(file_path, index=False)
 
       st.success("Record saved successfully!")
-          
+
     else:
       st.error("Record not saved...Thank for analysis")
-        
+

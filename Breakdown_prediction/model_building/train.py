@@ -31,6 +31,7 @@ from sklearn.ensemble import RandomForestClassifier # Added for RandomForest
 from featureengineer import FeatureEngineer
 from outliercapper import OutlierCapper
 
+
 api = HfApi()
 
 Xtrain_path = "hf://datasets/sudhirpgcmma02/Engine_PM/Xtrain.csv"
@@ -56,32 +57,19 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
         else:
             # These are the expected column names after initial preprocessing
             # They should be consistent with the features defined in the overall dataset.
-            """expected_column_names = [
-                'Engine_rpm', 'Lub_oil_pressure', 'Fuel_pressure',
-                'Coolant_pressure', 'lub_oil_temp', 'Coolant_temp'
-            ]"""
-            col=self.columns_
-            #df = pd.DataFrame(X, columns=expected_column_names)
-            df = pd.DataFrame(X, columns=col)
-
-        df.columns = (df.columns
+        
+        
+            print("columna names #######################\n",df.columns)
+            df.columns = (df.columns
                            .str.strip()
                            .str.replace(" ","_")
                            .str.replace(r"[^\w]","_",regex=True)
+                           .str.lower()
         )
-
-        engine_rpm_col = 'Engine_rpm'
-        lub_oil_pressure_col = 'Lub_oil_pressure'
-        fuel_pressure_col = 'Fuel_pressure'
-        coolant_pressure_col = 'Coolant_pressure'
-        lub_oil_temp_col = 'lub_oil_temp'
-        coolant_temp_col = 'Coolant_temp'
-
-        core_sensor_cols = [
-            engine_rpm_col, lub_oil_pressure_col, fuel_pressure_col,
-            coolant_pressure_col, lub_oil_temp_col, coolant_temp_col
-        ]
-
+            print("columna names #######################\n",df.columns)
+        
+        core_sensor_cols =df.columns.tolist()
+        
         # ===== diff features
         for col_name in df.select_dtypes(include=np.number).columns:
             df[f"{col_name}_diff"] = df[col_name].diff()
@@ -102,8 +90,9 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
 
         # ===== aggregates
         # Corrected: Use actual string column names instead of integer indices
-        df["temp_gap"] = df[lub_oil_temp_col] - df[coolant_temp_col]   # oil vs coolant
-        df["pressure_sum"] = df[[lub_oil_pressure_col, fuel_pressure_col, coolant_pressure_col]].sum(axis=1)
+        
+        df["temp_gap"] = df['lub_oil_temp'] - df['coolant_temp']   # oil vs coolant
+        df["pressure_sum"] = df[['lub_oil_pressure','fuel_pressure','coolant_pressure']].sum(axis=1)
 
         df = df.fillna(0)
 
@@ -162,12 +151,26 @@ df.columns = (df.columns
                    .str.strip()
                    .str.replace(" ","_")
                    .str.replace(r"[^\w]","_",regex=True)
+                   .str.lower()
   )
-print(df.head(10))
+print("printing 10 row",df.head(10))
 
 # Split into X (features) and y (target)
-Xtrain =X_train.copy()
+#Xtrain =X_train.copy()
+Xtrain=df.copy()
 ytrain =y_train.copy()
+
+ytrain.columns=(ytrain.columns
+                   .str.strip()
+                   .str.replace(" ","_")
+                   .str.replace(r"[^\w]","_",regex=True)
+  )
+Xtest.columns=(Xtest.columns
+                   .str.strip()
+                   .str.replace(" ","_")
+                   .str.replace(r"[^\w]","_",regex=True)
+                   .str.lower()
+  )
 print("########################### independent, dependent varial split completed ################################")
 
 # Extract column names as lists for the ColumnTransformer
@@ -483,6 +486,7 @@ for name,model in best_model.named_estimators_.items():
   print(f"\n * Base model - {name}")
   pprint(model.get_params())
 
+
 # printing the model performance (FP / FN evaluation)
 print("best slected model | classification report \n",classification_report(ytest, y_pred))
 print("best slected model | confusion matrix \n",confusion_matrix(ytest, y_pred))
@@ -567,3 +571,4 @@ api.upload_file(
      repo_id=repo_id,
      repo_type=repo_type,
 )
+
