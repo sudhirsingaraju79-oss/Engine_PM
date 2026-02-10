@@ -124,7 +124,7 @@ if submit:
   # -----------------------------
   # SAVE RECORDS SECTION
   # -----------------------------
-  if st.button("Save Record"):
+if st.button("Save Record"):
     if "input_df" in st.session_state:
       file_path = "records.csv"
 
@@ -139,7 +139,6 @@ if submit:
       updated_df.to_csv(file_path, index=False)
 
     st.success("Record saved successfully!")
-
-  else:
-    st.error("Record not saved...Thank for analysis")
+else:
+  st.error("Record not saved...Thank for analysis")
 
