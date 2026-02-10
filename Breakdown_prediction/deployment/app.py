@@ -91,7 +91,7 @@ with st.form("engine_input_form"):
 # Predict Button
 # -----------------------------
 if submit:
-  
+
     input_df = pd.DataFrame({
             "engine_rpm": [engine_rpm],
             "lub_oil_pressure": [lub_oil_pressure],
@@ -125,22 +125,22 @@ if submit:
       # -----------------------------
       # SAVE RECORDS SECTION
       # -----------------------------
-    if st.button("Save Record"):
-      if "input_df" in st.session_state:
+if st.button("Save Record"):
+  if "input_df" in st.session_state:
         file_path = "records.csv"
 
-        # If file exists → append
-        if os.path.exists(file_path):
-          existing_df = pd.read_csv(file_path)
-          updated_df = pd.concat([existing_df, input_df], ignore_index=True)
-        else:
-          # Create new CSV
-          updated_df = st.session_state['input_df']
+  # If file exists → append
+  if os.path.exists(file_path):
+    existing_df = pd.read_csv(file_path)
+    updated_df = pd.concat([existing_df, input_df], ignore_index=True)
+  else:
+    # Create new CSV
+    updated_df = st.session_state['input_df']
 
-          updated_df.to_csv(file_path, index=False)
+    updated_df.to_csv(file_path, index=False)
 
-      st.success("Record saved successfully!")
+  st.success("Record saved successfully!")
 
-    else:
-      st.error("Record not saved...Thank for analysis")
+else:
+  st.error("Record not saved...Thank for analysis")
 
