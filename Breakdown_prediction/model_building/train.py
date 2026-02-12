@@ -57,8 +57,8 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
         else:
             # These are the expected column names after initial preprocessing
             # They should be consistent with the features defined in the overall dataset.
-        
-        
+
+
             print("columna names #######################\n",df.columns)
             df.columns = (df.columns
                            .str.strip()
@@ -67,9 +67,9 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
                            .str.lower()
         )
             print("columna names #######################\n",df.columns)
-        
+
         core_sensor_cols =df.columns.tolist()
-        
+
         # ===== diff features
         for col_name in df.select_dtypes(include=np.number).columns:
             df[f"{col_name}_diff"] = df[col_name].diff()
@@ -90,7 +90,7 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
 
         # ===== aggregates
         # Corrected: Use actual string column names instead of integer indices
-        
+
         df["temp_gap"] = df['lub_oil_temp'] - df['coolant_temp']   # oil vs coolant
         df["pressure_sum"] = df[['lub_oil_pressure','fuel_pressure','coolant_pressure']].sum(axis=1)
 
