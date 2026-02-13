@@ -125,8 +125,8 @@ if submit:
   # SAVE RECORDS SECTION
   # -----------------------------
 if st.button("Save Record"):
-  if "input_df" in st.session_state:
-    file_path = "records.csv"
+    if "input_df" in st.session_state:
+      file_path = "records.csv"
 
       # If file exists → append
     if os.path.exists(file_path):
