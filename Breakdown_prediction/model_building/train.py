@@ -59,14 +59,14 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
             # They should be consistent with the features defined in the overall dataset.
 
 
-            print("columna names #######################\n",df.columns)
-            df.columns = (df.columns
+          print("columna names #######################\n",df.columns)
+          df.columns = (df.columns
                            .str.strip()
                            .str.replace(" ","_")
                            .str.replace(r"[^\w]","_",regex=True)
                            .str.lower()
         )
-            print("columna names #######################\n",df.columns)
+          print("columna names #######################\n",df.columns)
 
         core_sensor_cols =df.columns.tolist()
 
