@@ -387,11 +387,22 @@ for name, model in voting_model.named_estimators_.items():
 #evaluation
 from sklearn.metrics import classification_report
 y_pred = voting_model.predict(Xtest)
+
 acc=accuracy_score(ytest, y_pred)
 f1=f1_score(ytest, y_pred,pos_label=1)
 rec=recall_score(ytest, y_pred,pos_label=1)
 pre=precision_score(ytest, y_pred,pos_label=1)
 roc=roc_auc_score(ytest, y_pred)
+cl_rep=classification_report(ytest, y_pred)
+con_rep=confusion_matrix(ytest, y_pred)
+
+print("\n Voting accuracy score",acc)
+print("\n Voting f1 score",f1)
+print("\n Voting recall score",rec)
+print("\n Voting precision score",pre)
+print("\n Voting roc auc score",roc)
+print("\n Voting classification_report\n", cl_rep)
+print("\n Voting confusion_matrix\n", con_rep)
 
 pref_df=pd.DataFrame([{
     "Accuracy":acc,
@@ -400,7 +411,7 @@ pref_df=pd.DataFrame([{
     "precision":pre
     ,"roc_auc":roc
 }])
-print("performance\n",pref_df)
+print("Voting Classifier performance\n",pref_df)
 
 
 stack_model = StackingClassifier(
@@ -428,16 +439,14 @@ pre=precision_score(ytest, y_pred)
 roc=roc_auc_score(ytest, y_pred_proba)
 cl_rep=classification_report(ytest, y_pred)
 con_rep=confusion_matrix(ytest, y_pred)
-f1_scr=f1_score(ytest, y_pred)
 
-print("accuracy score",acc)
-print("f1 score",f1)
-print("recall score",rec)
-print("precision score",pre)
-print("roc auc score",roc)
-print("\n classification_report\n", cl_rep)
-print("\nconfusion_matrix\n", con_rep)
-print("f1_score",f1_scr)
+print("\n Stacking accuracy score",acc)
+print("\n Stacking f1 score",f1)
+print("\n Stacking recall score",rec)
+print("\n Stacking precision score",pre)
+print("\n Stacking roc auc score",roc)
+print("\n Stacking classification_report\n", cl_rep)
+print("\n Stacking confusion_matrix\n", con_rep)
 
 co_eff=pd.DataFrame(
     stack_model.final_estimator_.coef_,
@@ -469,7 +478,7 @@ results= pd.DataFrame({
 )
 
 # printing the model results against each indiviual model
-print("model evaluation results \n",results)
+print("Stacking Vs Voting model evaluation results \n",results)
 
 # primary - recalll , secondary - f1 , tie-break - ,roc-auc, higher score model selected for final deployment
 best_model = stack_model if results.loc["recall","stacking"]>results.loc["recall","voting"] else voting_model
