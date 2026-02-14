@@ -14,7 +14,7 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
             # These are the expected column names after initial preprocessing
             # They should be consistent with the features defined in the overall dataset.
 
-          df.columns = (df.columns
+            df.columns = (df.columns
                            .str.strip()
                            .str.replace(" ","_")
                            .str.replace(r"[^\w]","_",regex=True)

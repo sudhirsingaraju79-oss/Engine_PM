@@ -87,11 +87,8 @@ with st.form("engine_input_form"):
     )
     submit = st.form_submit_button("🚀 Predict Engine Condition")
 
-# -----------------------------
-# Predict Button
-# -----------------------------
-if submit:
-  input_df = pd.DataFrame({
+##data capturing
+input_df = pd.DataFrame({
             "engine_rpm": [engine_rpm],
             "lub_oil_pressure": [lub_oil_pressure],
             "fuel_pressure": [fuel_pressure],
@@ -99,6 +96,11 @@ if submit:
             "lub_oil_temp": [lub_oil_temp],
             "coolant_temp": [coolant_temp]
         })
+# -----------------------------
+# Predict Button
+# -----------------------------
+if submit:
+
 
   st.success("✅ Input captured successfully")
   st.write("### Input Data")
