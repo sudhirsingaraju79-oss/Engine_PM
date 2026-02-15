@@ -5,11 +5,16 @@ on:
     branches:
       - main  # Automatically triggers on push to the main branch
 
+permissions: 
+  contents: write
+
 jobs:
   register-dataset:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth : 0
       - name : Debug
         run: 
           pwd
@@ -26,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+           fetch-depth : 0
       - name : Debug
         run: 
           pwd
@@ -42,6 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+           fetch-depth : 0
       - name : Debug
         run: 
           pwd
@@ -63,6 +72,8 @@ jobs:
     needs: [model-traning,data-prep,register-dataset]
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth : 0
       - name : Debug
         run: 
           pwd
